@@ -6,30 +6,30 @@ using namespace std;
 struct lista_element
 {
     int nr;
-    lista_element *next; // wskaŸnik na kolejny element
+    lista_element *next;
 
     // konstruktor struktury
     lista_element(int wartosc)
     {
         nr = wartosc;
-        next = NULL; // domyœlnie nastêpny to null
+        next = NULL;
     }
 };
 
 class Lista
 {
 public:
-    lista_element *glowa; // wskaŸnik na pocz¹tek listy
+    lista_element *glowa;
 
     // konstruktor klasy
     Lista()
     {
-        glowa = NULL; // na pocz¹tku lista jest pusta
+        glowa = NULL; // ustawianie na null
     }
 
-    void dodawanie(int numerek) // dodaje na sam koniec listy
+    void dodawanie(int numerek) // F dodawania el
     {
-        lista_element *nowy = new lista_element(numerek);
+        lista_element *nowy = new lista_element(numerek); // tworzenie nowego el
 
         if (glowa == NULL)
         {
@@ -37,6 +37,7 @@ public:
         }
         else
         {
+            // dodawanie el z racji ze jest null to sprawdzamy ostatni el przed null
             lista_element *temp = glowa;
             while (temp->next != NULL)
             {
@@ -46,8 +47,9 @@ public:
         }
     }
 
-    int usuwanie_ostatni_el() // funkcja usuwa ostatni el z listy i go zwraca
+    int usuwanie_ostatni_el() // F usuwania ostatniego el
     {
+        // sprawdzenie czy lista jest pusta
         if (glowa == NULL)
         {
             cout << "Lista jest pusta!" << endl;
@@ -62,6 +64,7 @@ public:
             return usunietawartosc;
         }
 
+        // usuwanie ostatniego el przed null i zwrocenie go
         lista_element *temp = glowa;
         while (temp->next->next != NULL)
         {
@@ -75,83 +78,62 @@ public:
         return usunietawartosc;
     }
 
-    void wypisz() // funkcja wypisuje liste
+    void wypisz() // F wypisujaca liste
     {
-        if (glowa == NULL)
-        {
-            cout << "Lista jest pusta!" << endl;
-            return;
-        }
-
         lista_element *temp = glowa;
         while (temp != NULL)
         {
-            cout << temp->nr << " -> ";
+            cout << temp->nr << " ";
             temp = temp->next;
         }
-        cout << "NULL" << endl;
+        cout << endl;
     }
 };
 
 int main()
 {
-    Lista mojaLista; // obiekt klasy Lista
+    Lista mojaLista;
 
-    // Ogarniêta basickowa lista na start (dodajemy przyk³adowe dane)
+    // poczatkowe el
     mojaLista.dodawanie(10);
     mojaLista.dodawanie(20);
     mojaLista.dodawanie(30);
 
     int liczba;
 
-    // Zloopowany switch - pêtla dzia³a ca³y czas, dopóki u¿ytkownik nie wybierze 0
     while (true)
     {
-        cout << "\n==========================" << endl;
-        cout << "1. Wypisz" << endl;
-        cout << "2. Dodaj" << endl;
-        cout << "3. Usun ostatni element" << endl;
-        cout << "0. Wyjdz z programu" << endl;
-        cout << "==========================" << endl;
+        cout << "\n1.Wypisz" << endl;
+        cout << "2.Dodaj" << endl;
+        cout << "3.Usun ostatni element" << endl;
+        cout << "0.Wyjdz" << endl;
         cout << "podaj wybor: ";
         cin >> liczba;
 
-        cout << endl;
-
-        // pole wyboru typu liczbowego
         switch (liczba)
         {
         case 1:
-            cout << "Zawartosc listy: ";
             mojaLista.wypisz();
             break;
 
         case 2:
         {
             int numerek;
-            cout << "Wpisz numer ktory chcesz dodac: ";
+            cout << "Wpisz numer: ";
             cin >> numerek;
             mojaLista.dodawanie(numerek);
-            cout << "Dodano " << numerek << " do listy." << endl;
             break;
         }
 
         case 3:
-        {
-            int usuniety = mojaLista.usuwanie_ostatni_el();
-            if (usuniety != -1)
-            {
-                cout << "Usuniêto element: " << usuniety << endl;
-            }
+            cout << "Usunieto: " << mojaLista.usuwanie_ostatni_el() << endl;
             break;
-        }
 
         case 0:
-            cout << "Koniec programu!" << endl;
-            return 0; // wyjœcie z programu
+            return 0;
 
         default:
-            cout << "Wprowadz z listy wyboru!" << endl;
+            cout << "Zly wybor!" << endl;
             break;
         }
     }
